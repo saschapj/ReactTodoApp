@@ -1,8 +1,11 @@
 import './App.css';
 import { useEffect } from 'react';
 import {React,useState} from 'react';
-import { FaCheckCircle, FaTrash,FaPlusCircle,FaFilter,FaSave} from 'react-icons/fa';
+import { FaCheckCircle, FaTrash,FaFilter,FaSave} from 'react-icons/fa';
 import SimpleStorage from "react-simple-storage";
+import TodoForm from './TodoForm';
+import FunctionButtons from './FunctionButtons';
+import Todos from './Todos';
 
 function App() {
 
@@ -96,27 +99,10 @@ function App() {
       
     <div className="gridWrapper">      
       <div className="wrapper">
-        <div className="newTodoInput">
-          <input value={newTodo} onChange={todoInputChange} type="text" placeholder='todo'/>
-          <button className="buttonAddTodo" onClick={addTodo}><FaPlusCircle/></button>
-        </div>        
-        <div className="todos">          
+        <TodoForm newTodo={newTodo} todoInputChange={todoInputChange} addTodo={addTodo}/>
+        <Todos filter={filter} todos={todos} deleteTodo={deleteTodo} completeTodo={completeTodo} todosCompleted={todosCompleted}/>
 
-        {!filter? <ul className="allTodos">      
-              {todos.map(todo=><li key={todo.id}><span className="todoName">{todo.value}</span> <span className="buttonWrapper"><button className="buttonDelete" onClick={() => {deleteTodo(todo.id)}}><FaTrash/></button>
-              <button className={todo.completed ? "buttonCompleted": "buttonComplete"} onClick={() => {completeTodo(todo.id)}}><FaCheckCircle/></button></span></li>)}
-        </ul> :
-
-         <ul className="compeltedTodos">      
-              {todosCompleted.map(todo=><li key={todo.id}><span className="todoName">{todo.value}</span> <span className="buttonWrapper"><button className="buttonDelete" onClick={() => {deleteTodo(todo.id)}}><FaTrash/></button>
-              <button className={todo.completed ? "buttonCompleted": "buttonComplete"} onClick={() => {completeTodo(todo.id)}}><FaCheckCircle/></button></span></li>)}
-        </ul> }
-
-          
-        </div>
-        <button className="buttonFilterTodo" onClick={filterForCompleted}>erledigte anzeigen<FaFilter/></button>
-        <button className="buttonSaveTodo" onClick={saveTodos}>Todos speichern<FaSave/></button>
-        
+        <FunctionButtons filterForCompleted={filterForCompleted} saveTodos={saveTodos}/>
        
       </div>
     </div>
